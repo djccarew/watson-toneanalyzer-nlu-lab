@@ -59,7 +59,7 @@ Python app requirements
 Java app requirements:
 
   - Java 1.7 or later JVM
-  - [Gradle Build Tool](https://gradle.org)
+  - [Gradle Build Tool](https://gradle.org) Note: Version 4.7 was used to verify this example
 
 
 

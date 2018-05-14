@@ -109,9 +109,9 @@ public class ToneAnalyzerNLU {
 			
 			// Order saved sentences by descending score
 			Collections.sort(sentencesWithJoy);
-			// Keep only top 3
-			if (sentencesWithJoy.size() > 3) {
-				sentencesWithJoy.subList(3, sentencesWithJoy.size()).clear();
+			// Keep only top 5
+			if (sentencesWithJoy.size() > 5) {
+				sentencesWithJoy.subList(5, sentencesWithJoy.size()).clear();
 			}
 			
 			System.out.println("\nMost positive statements from earnings call:\n");
