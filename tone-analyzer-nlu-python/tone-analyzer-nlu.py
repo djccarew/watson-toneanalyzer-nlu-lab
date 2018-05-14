@@ -49,9 +49,9 @@ def main():
                        break
 
               sentences_with_joy = sorted(sentences_with_joy, key=itemgetter('score'), reverse=True)
-              # Only top 3 are being selected
-              if len(sentences_with_joy) > 3:
-                   sentences_with_joy = sentences_with_joy[:3]
+              # Only top 5 are being selected
+              if len(sentences_with_joy) > 5:
+                   sentences_with_joy = sentences_with_joy[:5]
 
        
               index = 1
