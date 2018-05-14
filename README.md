@@ -54,12 +54,12 @@ Test the scenario  using 3 earnings report transcripts  using  a standalone app.
 
 Python app requirements
 
-i) [Python 3.5](https://www.python.org/downloads) or later.
+  i) [Python 3.5](https://www.python.org/downloads) or later.
 
 Java app requirements:
 
-i) Java 1.7 or later JVM
-ii) [Gradle Build Tool](https://gradle.org)
+  i) Java 1.7 or later JVM
+  ii) [Gradle Build Tool](https://gradle.org)
 
 
 
@@ -77,7 +77,7 @@ ii) [Gradle Build Tool](https://gradle.org)
 
 2.1.4 Verify the app runs without errors and the output looks something like the following.
 
-`
+```
 Analyzing  3 earnings call transcripts ...
 Analyzing transcript file name ../test_data/JPMC1Q2018EarningsCall.txt
 
@@ -90,7 +90,7 @@ keywords: Client investment assets, record flows, net new money
 semantic_roles:
 subject: Client investment assets action: were object: 13% year-on-year
 ...
-`
+```
 
 ### 2.2 Test with a Java app
 
@@ -119,7 +119,7 @@ subject: Client investment assets action: were object: 13% year-on-year
 
 2.2.4 Verify the app runs without errors and the output looks something like the following.
 
-`
+```
 Analyzing 3 earnings call transcripts
 
 Analyzing transcript filename JPMC1Q2018EarningsCall.txt
@@ -138,9 +138,8 @@ subject: Client investment assets action: were object: 13% year-on-year
 ...
 
 
-`
+```
 
-3.3.5 Look at the files that were reported as false positives or false negatives and see if you can see why the classifier had problems with these particular images.
 
 ## Conclusion
-Congratulations ! You successfully created a classifier to detect wedding pictures. With just 50 examples and 50 negative examples your were able to quickly created a classifier that is approximately  97% accurate on some randomly selected  test examples. 
+Congratulations ! You successfully worked with both Tone Analyzer and NLU to start creating a framework to extract highlights from earnings call transcripts.
