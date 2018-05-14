@@ -54,12 +54,12 @@ Test the scenario  using 3 earnings report transcripts  using  a standalone app.
 
 Python app requirements
 
-  i) [Python 3.5](https://www.python.org/downloads) or later.
+  - [Python 3.5](https://www.python.org/downloads) or later.
 
 Java app requirements:
 
-  i) Java 1.7 or later JVM
-  ii) [Gradle Build Tool](https://gradle.org)
+  - Java 1.7 or later JVM
+  - [Gradle Build Tool](https://gradle.org)
 
 
 
