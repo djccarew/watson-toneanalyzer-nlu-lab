@@ -117,7 +117,20 @@ subject: Client investment assets action: were object: 13% year-on-year
 
 `gradlew.bat run`
 
-2.2.4 Verify the app runs without errors and the output looks something like the following.
+2.2.4 (Optional) Run the following command to generate Eclipse artifacts so the project can be imported into Eclipse 
+
+**Linux/Mac**
+
+`./gradlew eclipse`
+
+**Windows**
+
+`gradlew.bat eclipse`
+
+Note: after running the command import this folder as an existing project into Eclipse
+
+
+2.2.5 Verify the app runs without errors and the output looks something like the following.
 
 ```
 Analyzing 3 earnings call transcripts
