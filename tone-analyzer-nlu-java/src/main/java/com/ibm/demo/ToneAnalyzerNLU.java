@@ -52,14 +52,6 @@ public class ToneAnalyzerNLU {
 				|| properties.getProperty("TEST_DATA_DIR") == null) {
 			System.err.println("Error: Service credentials and/or test data dir  missing. Terminating ...");
 			System.exit(1);
-		} else {
-			// Adjust UNIX style path in TEST_DATA_DIR property if running on Windows
-			if (properties.getProperty("TEST_DATA_DIR").contains("/")) {
-				if (File.pathSeparatorChar != '/') {
-					String windowsPath = properties.getProperty("TEST_DATA_DIR").replaceAll("/", File.pathSeparator);
-					properties.setProperty("TEST_DATA_DIR", windowsPath);
-				}
-			}
 		}
 
 		// Create service clients
@@ -83,7 +75,11 @@ public class ToneAnalyzerNLU {
 		// Get all txt files in test data folder
 		File dir = new File(properties.getProperty("TEST_DATA_DIR"));
 		String[] extensions = new String[] { "txt" };
-
+		
+		if (!dir.isDirectory()) {
+			dir = new File(properties.getProperty("TEST_DATA_DIR").replaceAll("\\.\\.", ""));
+		}
+		
 		List<File> files = (List<File>) FileUtils.listFiles(dir, extensions, true);
 
 		System.out.println("Analyzing " + files.size() + " earnings call transcripts");
