@@ -69,7 +69,7 @@ Java app requirements:
 
 2.1.2 In a command prompt or terminal navigate to the ***tone-analyzer-nlu-python*** sub folder of this project. Run the following command to install the dependencies
 
-`pip -r requirements.txt`
+`pip install -r requirements.txt`
 
 2.1.3 Run the following command to run the tester application
 
