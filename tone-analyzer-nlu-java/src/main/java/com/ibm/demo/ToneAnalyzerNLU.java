@@ -36,7 +36,7 @@ import okhttp3.logging.HttpLoggingInterceptor.Level;
 
 public class ToneAnalyzerNLU {
 
-        @SuppressWarnings("deprecation")
+	@SuppressWarnings("deprecation")
 	public static void main(String[] args) throws IOException {
 
 		// Getting required properties
@@ -52,6 +52,14 @@ public class ToneAnalyzerNLU {
 				|| properties.getProperty("TEST_DATA_DIR") == null) {
 			System.err.println("Error: Service credentials and/or test data dir  missing. Terminating ...");
 			System.exit(1);
+		} else {
+			// Adjust UNIX style path in TEST_DATA_DIR property if running on Windows
+			if (properties.getProperty("TEST_DATA_DIR").contains("/")) {
+				if (File.pathSeparatorChar != '/') {
+					String windowsPath = properties.getProperty("TEST_DATA_DIR").replaceAll("/", File.pathSeparator);
+					properties.setProperty("TEST_DATA_DIR", windowsPath);
+				}
+			}
 		}
 
 		// Create service clients
@@ -61,17 +69,17 @@ public class ToneAnalyzerNLU {
 
 		NaturalLanguageUnderstanding nlu = new NaturalLanguageUnderstanding("2018-03-16");
 		nlu.setUsernameAndPassword(properties.getProperty("NLU_USER"), properties.getProperty("NLU_PASSWORD"));
-        KeywordsOptions keywordsOptions = new KeywordsOptions.Builder().limit(5).build();
-        SemanticRolesOptions semanticRolesOptions = new SemanticRolesOptions.Builder().build();
-        Features nluFeatures = new Features.Builder().semanticRoles(semanticRolesOptions).keywords(keywordsOptions).build();
-        
-        // Turn off HTTP logging
-        // Default is BASIC which  logs all HTTP requests to the Watson services
-        // Commenting out these 2 lines will revert to  the  default behavior
-        HttpLoggingInterceptor httpLogger = HttpLogging.getLoggingInterceptor();
-        httpLogger.setLevel(Level.NONE);
-        
-        
+		KeywordsOptions keywordsOptions = new KeywordsOptions.Builder().limit(5).build();
+		SemanticRolesOptions semanticRolesOptions = new SemanticRolesOptions.Builder().build();
+		Features nluFeatures = new Features.Builder().semanticRoles(semanticRolesOptions).keywords(keywordsOptions)
+				.build();
+
+		// Turn off HTTP logging
+		// Default is BASIC which logs all HTTP requests to the Watson services
+		// Commenting out these 2 lines will revert to the default behavior
+		HttpLoggingInterceptor httpLogger = HttpLogging.getLoggingInterceptor();
+		httpLogger.setLevel(Level.NONE);
+
 		// Get all txt files in test data folder
 		File dir = new File(properties.getProperty("TEST_DATA_DIR"));
 		String[] extensions = new String[] { "txt" };
@@ -83,17 +91,14 @@ public class ToneAnalyzerNLU {
 		// Analyze each file
 		for (File file : files) {
 			System.out.println("\nAnalyzing transcript filename " + file.getName() + "\n");
-			String transcript =  FileUtils.readFileToString(file);
-			
-			// Get sentences that indicate joy 
-			ToneOptions toneOptions = new ToneOptions.Builder()
-				        .sentences(true)
-				        .text(transcript)
-				        .build();
+			String transcript = FileUtils.readFileToString(file);
+
+			// Get sentences that indicate joy
+			ToneOptions toneOptions = new ToneOptions.Builder().sentences(true).text(transcript).build();
 			ToneAnalysis tone = toneAnalyzer.tone(toneOptions).execute();
 			ArrayList<JoyScore> sentencesWithJoy = new ArrayList<JoyScore>();
 			List<SentenceAnalysis> sentenceAnalysis = tone.getSentencesTone();
-			for (SentenceAnalysis eachSentence: sentenceAnalysis) {
+			for (SentenceAnalysis eachSentence : sentenceAnalysis) {
 				List<ToneScore> toneScores = eachSentence.getTones();
 				for (ToneScore eachScore : toneScores) {
 					// If joy is detected save the sentence and the score
@@ -104,70 +109,70 @@ public class ToneAnalyzerNLU {
 						sentencesWithJoy.add(joyScore);
 					}
 				}
-				
+
 			}
-			
+
 			// Order saved sentences by descending score
 			Collections.sort(sentencesWithJoy);
 			// Keep only top 5
 			if (sentencesWithJoy.size() > 5) {
 				sentencesWithJoy.subList(5, sentencesWithJoy.size()).clear();
 			}
-			
+
 			System.out.println("\nMost positive statements from earnings call:\n");
 			// Print 3 sentences with the highest joy score
 			for (int i = 0; i < sentencesWithJoy.size(); i++) {
-				System.out.println(String.valueOf(i+1) + ") " + sentencesWithJoy.get(i).getText() + "\n");
-				
+				System.out.println(String.valueOf(i + 1) + ") " + sentencesWithJoy.get(i).getText() + "\n");
+
 				// For each sentence call NLU to get keywords and semantic roles
-				AnalyzeOptions analyzeOptions = new AnalyzeOptions.Builder().text(sentencesWithJoy.get(i).getText()).features(nluFeatures).build();
-				AnalysisResults analysisResults = nlu.analyze(analyzeOptions).execute();	
+				AnalyzeOptions analyzeOptions = new AnalyzeOptions.Builder().text(sentencesWithJoy.get(i).getText())
+						.features(nluFeatures).build();
+				AnalysisResults analysisResults = nlu.analyze(analyzeOptions).execute();
 				List<KeywordsResult> keywords = analysisResults.getKeywords();
-				
+
 				// Print all keywords with relevance> 0.5
 				boolean firstKeyword = true;
-				for (KeywordsResult eachKeyword: keywords) {
+				for (KeywordsResult eachKeyword : keywords) {
 					if (eachKeyword.getRelevance() > 0.5) {
 						if (firstKeyword) {
 							System.out.print("\nNLU Analysis:\nkeywords: ");
 							System.out.print(eachKeyword.getText());
 							firstKeyword = false;
-						}
-						else {
+						} else {
 							System.out.print("," + eachKeyword.getText());
 						}
 					}
 				}
 				System.out.println("");
-				
+
 				// Process semantic roles
 				// For each role get subject, action and object
 				boolean firstSemanticRole = true;
 				List<SemanticRolesResult> semanticRoles = analysisResults.getSemanticRoles();
-				for (SemanticRolesResult eachSemanticRole: semanticRoles) {
+				for (SemanticRolesResult eachSemanticRole : semanticRoles) {
 					if (firstSemanticRole) {
-					    System.out.println("semantic roles: ");
+						System.out.println("semantic roles: ");
 						firstSemanticRole = false;
 					}
-					if (eachSemanticRole.getSubject() == null) 
+					if (eachSemanticRole.getSubject() == null)
 						System.out.print("subject: N/A ");
 					else
 						System.out.print("subject: " + eachSemanticRole.getSubject().getText() + " ");
-					
-					if (eachSemanticRole.getAction() == null) 
+
+					if (eachSemanticRole.getAction() == null)
 						System.out.print("action: N/A ");
 					else
 						System.out.print("action: " + eachSemanticRole.getAction().getText() + " ");
-					
-					if (eachSemanticRole.getObject() == null) 
+
+					if (eachSemanticRole.getObject() == null)
 						System.out.print("object: N/A ");
 					else
 						System.out.print("object: " + eachSemanticRole.getObject().getText() + " ");
-					System.out.println("");	
+					System.out.println("");
 				}
-				System.out.println("");	
+				System.out.println("");
 			}
-			
+
 		}
 
 	}
@@ -175,35 +180,38 @@ public class ToneAnalyzerNLU {
 }
 
 // Helper class to save text of sentence and the Tone Analyzer score for joy
-// Implements the Comparable interface so a list of these objects can 
-// be sorted 
+// Implements the Comparable interface so a list of these objects can
+// be sorted
 class JoyScore implements java.lang.Comparable<JoyScore> {
-	
+
 	private double score;
 	private String text;
-	
+
 	public double getScore() {
 		return score;
 	}
+
 	public void setScore(double score) {
 		this.score = score;
 	}
+
 	public String getText() {
 		return text;
 	}
+
 	public void setText(String text) {
 		this.text = text;
 	}
 
-	// Will cause a list of these object to be sorted sort by score in  descending order
+	// Will cause a list of these object to be sorted sort by score in descending
+	// order
 	@Override
 	public int compareTo(JoyScore other) {
 		if (this.score > other.getScore())
 			return -1;
 		else if (this.score < other.getScore())
 			return 1;
-		else 
+		else
 			return 0;
 	}
 }
-
