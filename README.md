@@ -34,8 +34,8 @@ If you are not already signed up for the IBM Cloud, [sign up here](https://conso
 ![Create resource](images/ss1.png)
 
 
-1.3.2 Select the **Watson** category project type and then click on **Natural Language Understandingr**
-![VR Service](images/ss2.png)
+1.3.2 Select the **Watson** category project type and then click on **Natural Language Understanding**
+![VR Service](images/ss6.png)
 
 1.3.3 Make sure the **Lite plan** is selected and then click **Create**
 
@@ -67,7 +67,21 @@ Java app requirements:
 
 2.1.1 Edit the file ***settings.py*** in the ***tone-analyzer-nlu-python*** sub folder of this project. Put in the values of your Tone Analyzer **username** and **password** and your Natural Language Understanding  **username** and **password** that you saved earlier.
 
-2.1.2 In a command prompt or terminal navigate to the ***tone-analyzer-nlu-python*** sub folder of this project. Run the following command to install the dependencies
+2.1.2 In a command prompt or terminal navigate to the ***tone-analyzer-nlu-python*** sub folder of this project. Run the following command(s) to install the dependencies
+
+Setting up a virtual environment is very helpful when managing dependencies for specific applications.
+
+`pip install -r virtualenv`
+
+Create a virtual environment
+
+`virtualenv -p python3 venv`
+
+Activate the new virtual environment
+
+`source venv/bin/activate`
+
+Now install the dependencies for this project
 
 `pip install -r requirements.txt`
 
