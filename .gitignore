@@ -1,6 +1,7 @@
 ## Mac specific meta-data
 .DS_Store
 **/.DS_Store
+**/__pycache__
 .gradle
 /build/
 

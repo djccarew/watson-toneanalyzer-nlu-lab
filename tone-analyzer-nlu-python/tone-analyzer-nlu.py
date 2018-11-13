@@ -36,7 +36,7 @@ def main():
 
            with open(filename, 'r') as transcript:
 
-              tone = tone_analyzer.tone(tone_input=transcript.read(), content_type="text/plain")
+              tone = tone_analyzer.tone(tone_input=transcript.read(), content_type="text/plain").get_result()
 
               # Get joy and sort by descending score
               sentences_with_joy = []
@@ -59,7 +59,7 @@ def main():
               # Semantic Roles
               for sentence in sentences_with_joy:
                  print(str(index) + ') ' + sentence['text'])
-                 nlu_analysis = natural_language_understanding.analyze(text = sentence['text'], features=Features(keywords=KeywordsOptions(), semantic_roles=SemanticRolesOptions(keywords=True)))
+                 nlu_analysis = natural_language_understanding.analyze(text = sentence['text'], features=Features(keywords=KeywordsOptions(), semantic_roles=SemanticRolesOptions(keywords=True))).get_result()
                  first_keyword = True
                  for each_item in nlu_analysis['keywords']:
                     if each_item['relevance'] > 0.5:
