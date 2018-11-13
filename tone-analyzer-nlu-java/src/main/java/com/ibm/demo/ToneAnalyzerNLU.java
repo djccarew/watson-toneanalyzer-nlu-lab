@@ -23,14 +23,15 @@ import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.SentenceAnalysis;
 import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.ToneAnalysis;
 import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.ToneOptions;
 import com.ibm.watson.developer_cloud.tone_analyzer.v3.model.ToneScore;
+import com.ibm.watson.developer_cloud.service.security.IamOptions;
 import com.ibm.watson.developer_cloud.util.HttpLogging;
 
 import okhttp3.logging.HttpLoggingInterceptor;
 import okhttp3.logging.HttpLoggingInterceptor.Level;
 
-// This Watson Java SDK example uses the Tone Analyzer service to extract the most positive sentences 
-// from earnings call transcripts and then runs those remarks through the Natural Language Understanding 
-// service to extract the most relevant keywords and Semantic Roles  from those  sentences extracted by 
+// This Watson Java SDK example uses the Tone Analyzer service to extract the most positive sentences
+// from earnings call transcripts and then runs those remarks through the Natural Language Understanding
+// service to extract the most relevant keywords and Semantic Roles  from those  sentences extracted by
 // Tone Analyzer. The companion file settings.properties is where the service credentials and location
 // of the call transcript files are provided to this application
 
@@ -46,21 +47,25 @@ public class ToneAnalyzerNLU {
 		}
 
 		// Exit if required properties not present
-		if (properties.getProperty("TONE_ANALYZER_USER") == null
-				|| properties.getProperty("TONE_ANALYZER_PASSWORD") == null
-				|| properties.getProperty("NLU_USER") == null || properties.getProperty("NLU_PASSWORD") == null
+		if (properties.getProperty("TONE_ANALYZER_APIKEY") == null
+				|| properties.getProperty("NLU_APIKEY") == null
 				|| properties.getProperty("TEST_DATA_DIR") == null) {
 			System.err.println("Error: Service credentials and/or test data dir  missing. Terminating ...");
 			System.exit(1);
 		}
 
 		// Create service clients
-		ToneAnalyzer toneAnalyzer = new ToneAnalyzer("2017-09-26");
-		toneAnalyzer.setUsernameAndPassword(properties.getProperty("TONE_ANALYZER_USER"),
-				properties.getProperty("TONE_ANALYZER_PASSWORD"));
+		IamOptions toneAnalyzerOptions = new IamOptions.Builder()
+    .apiKey(properties.getProperty("TONE_ANALYZER_APIKEY"))
+    .build();
 
-		NaturalLanguageUnderstanding nlu = new NaturalLanguageUnderstanding("2018-03-16");
-		nlu.setUsernameAndPassword(properties.getProperty("NLU_USER"), properties.getProperty("NLU_PASSWORD"));
+		ToneAnalyzer toneAnalyzer = new ToneAnalyzer("2017-09-21", toneAnalyzerOptions);
+
+		IamOptions nluOptions = new IamOptions.Builder()
+		.apiKey(properties.getProperty("NLU_APIKEY"))
+		.build();
+		NaturalLanguageUnderstanding nlu = new NaturalLanguageUnderstanding("2018-03-16", nluOptions);
+
 		KeywordsOptions keywordsOptions = new KeywordsOptions.Builder().limit(5).build();
 		SemanticRolesOptions semanticRolesOptions = new SemanticRolesOptions.Builder().build();
 		Features nluFeatures = new Features.Builder().semanticRoles(semanticRolesOptions).keywords(keywordsOptions)
@@ -75,11 +80,11 @@ public class ToneAnalyzerNLU {
 		// Get all txt files in test data folder
 		File dir = new File(properties.getProperty("TEST_DATA_DIR"));
 		String[] extensions = new String[] { "txt" };
-		
+
 		if (!dir.isDirectory()) {
 			dir = new File(properties.getProperty("TEST_DATA_DIR").replaceAll("\\.\\.", ""));
 		}
-		
+
 		List<File> files = (List<File>) FileUtils.listFiles(dir, extensions, true);
 
 		System.out.println("Analyzing " + files.size() + " earnings call transcripts");

@@ -1,6 +1,6 @@
 # Analyze earnings call transcripts with Watson Tone Analyzer and Natural Language Understanding
 
-This lab uses the Tone Analyzer service to extract the most positive sentences  from earnings call transcripts and then runs those remarks through the Natural Language Understanding  service to extract the most relevant keywords and Semantic Roles  from those  sentences . 
+This lab uses the Tone Analyzer service to extract the most positive sentences  from earnings call transcripts and then runs those remarks through the Natural Language Understanding  service to extract the most relevant keywords and Semantic Roles  from those  sentences .
 
 After instances of Tone Analyzer and Natural Languaga Understanding, you'll test drive yhe scenario with a test application.
 
@@ -16,16 +16,20 @@ If you are not already signed up for the IBM Cloud, [sign up here](https://conso
 ![Create resource](images/ss1.png)
 
 
-1.2.2 Select the **Watson** category project type and then click on **Tone Analyzer**
+1.2.2 Select the **AI** category project type and then click on **Tone Analyzer**
 ![VR Service](images/ss2.png)
 
 1.2.3 Make sure the **Lite plan** is selected and then click **Create**
 ![Lite plan](images/ss3.png)
 
-1.2.4 Select **Service credentials** at the left and then click on **View credentials** next to the credentials generated for your service instance
+1.2.4 Select **Service credentials** at the left and then click on **New credentials**
 ![Credentials](images/ss4.png)
 
-1.2.5 Click on the icon to copy the credentials to the clipboard and then save them in a text file on your Desktop (or some other convenient location). You'll need the **username** and **password** values later in the lab.
+1.2.5 Accept the default values and click **Add**
+
+1.2.6 Click on **View Credentials**
+
+1.2.7 Click on the icon to copy the credentials to the clipboard and then save them in a text file on your Desktop (or some other convenient location). You'll need the **apikey** value later in the lab.
 ![api_key](images/ss5.png)
 
 ### 1.3 Create an instance of the Watson Natural Language Understanding Service
@@ -34,18 +38,19 @@ If you are not already signed up for the IBM Cloud, [sign up here](https://conso
 ![Create resource](images/ss1.png)
 
 
-1.3.2 Select the **Watson** category project type and then click on **Natural Language Understanding**
+1.3.2 Select the **AI** category project type and then click on **Natural Language Understanding**
 ![VR Service](images/ss6.png)
 
 1.3.3 Make sure the **Lite plan** is selected and then click **Create**
 
 
-1.3.4 Select **Service credentials** at the left and then click on **View credentials** next to the credentials generated for your service instance
+1.3.4 Select **Service credentials** at the left and then click on **New credentials** next to the credentials generated for your service instance
 
+1.3.5 Accept the default values and click **Add**
 
-1.3.5 Click on the icon to copy the credentials to the clipboard and then save them in a text file on your Desktop (or some other convenient location). You'll need the **username** and **password** values later in the lab.
+1.3.6 Click on **View Credentials**
 
-
+1.3.7 Click on the icon to copy the credentials to the clipboard and then save them in a text file on your Desktop (or some other convenient location). You'll need the **apikey** value later in the lab.
 
 
 ## 2 Test scenario
@@ -65,7 +70,7 @@ Java app requirements:
 
 ### 2.1 Test with a Python app
 
-2.1.1 Edit the file ***settings.py*** in the ***tone-analyzer-nlu-python*** sub folder of this project. Put in the values of your Tone Analyzer **username** and **password** and your Natural Language Understanding  **username** and **password** that you saved earlier.
+2.1.1 Edit the file ***settings.py*** in the ***tone-analyzer-nlu-python*** sub folder of this project. Put in the values of your Tone Analyzer **apikey**  and your Natural Language Understanding  **apikey**  that you saved earlier.
 
 2.1.2 In a command prompt or terminal navigate to the ***tone-analyzer-nlu-python*** sub folder of this project. Run the following command(s) to install the dependencies
 
@@ -108,8 +113,8 @@ subject: Client investment assets action: were object: 13% year-on-year
 
 ### 2.2 Test with a Java app
 
-2.2.1 Edit the file ***settings.properties*** in the ***tone-analyzer-nlu-java/src/main/resources*** sub folder of this project.Put in the values of your Tone Analyzer **username** and **password** and your Natural Language Understanding  **username** and **password** that you saved earlier.
- 
+2.2.1 Edit the file ***settings.properties*** in the ***tone-analyzer-nlu-java/src/main/resources*** sub folder of this project.Put in the values of your Tone Analyzer **apikey**  and your Natural Language Understanding  **apikey**  that you saved earlier.
+
 
 2.2.2 In a command prompt or terminal navigate to the ***tone-analyzer-nlu-java*** sub folder of this project. Run the following command to build the app
 
@@ -131,7 +136,7 @@ subject: Client investment assets action: were object: 13% year-on-year
 
 `gradlew.bat run`
 
-2.2.4 (Optional) Run the following command to generate Eclipse artifacts so the project can be imported into Eclipse 
+2.2.4 (Optional) Run the following command to generate Eclipse artifacts so the project can be imported into Eclipse
 
 **Linux/Mac**
 

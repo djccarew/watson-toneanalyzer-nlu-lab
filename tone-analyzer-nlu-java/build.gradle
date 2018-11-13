@@ -24,10 +24,10 @@ dependencies {
     // Use JUnit test framework
     testCompile 'junit:junit:4.12'
 
-    implementation 'com.ibm.watson.developer_cloud:tone-analyzer:5.4.0'
-    
-    implementation 'com.ibm.watson.developer_cloud:natural-language-understanding:5.4.0'
- 
+    implementation 'com.ibm.watson.developer_cloud:tone-analyzer:6.9.1'
+
+    implementation 'com.ibm.watson.developer_cloud:natural-language-understanding:6.9.1'
+
     implementation 'commons-io:commons-io:2.6'
 }
 
