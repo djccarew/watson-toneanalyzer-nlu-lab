@@ -67,7 +67,7 @@ Docker requirements
 [Docker for your platform](https://docs.docker.com/install/)
 
 
-### Local Java or Python
+#### Local Java or Python
 If you don't use  Docker then you'll need one of the following installed locally
 
 Python: 
@@ -92,6 +92,7 @@ Java:
 Run the following commands to get a bash shell in a Python environment to run the subsequent commands
 
 `docker run -it --rm -v "$(pwd):/repo"  python:3.5-slim-jessie  bash`
+
 `cd /repo`
 
 ### Locally installed Python
@@ -134,6 +135,7 @@ subject: Client investment assets action: were object: 13% year-on-year
 Run the following commands to get a bash shell in a Java+Gradle  environment to run the subsequent commands
 
 `docker run -it --rm -v "$(cd ../ && pwd):/repo"  gradle:slim  bash`
+
 `cd /repo/tone-analyzer-nlu-java`
 
 ### Locally installed Java
