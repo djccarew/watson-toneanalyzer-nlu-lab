@@ -53,6 +53,14 @@ public class ToneAnalyzerNLU {
 			System.err.println("Error: Service credentials and/or test data dir  missing. Terminating ...");
 			System.exit(1);
 		}
+        
+        // Exit if required properties set to empty string
+		if (properties.getProperty("TONE_ANALYZER_APIKEY").trim().equals("")
+				|| properties.getProperty("NLU_APIKEY").trim().equals("")
+				|| properties.getProperty("TEST_DATA_DIR").trim().equals("")) {
+			System.err.println("Error: Service credentials and/or test data dir empty. Terminating ...");
+			System.exit(1);
+		}
 
 		// Create service clients
 		IamOptions toneAnalyzerOptions = new IamOptions.Builder()

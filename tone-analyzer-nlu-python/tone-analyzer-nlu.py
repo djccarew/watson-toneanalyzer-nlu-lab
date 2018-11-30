@@ -18,6 +18,9 @@ def main():
    if not hasattr(settings, 'TONE_ANALYZER_APIKEY')  or not hasattr(settings, 'NLU_APIKEY') or not hasattr(settings, 'TEST_DATA_DIR'):
        print("Error: Service credentials and/or test data dir  missing. Terminating ...")
        sys.exit(1)
+   elif settings.NLU_APIKEY.strip() == '' or settings.TONE_ANALYZER_APIKEY.strip() == '' or settings.TEST_DATA_DIR.strip() == '':
+       print("Error: Service credentials and/or test data dir empty . Terminating ...")
+       sys.exit(1)
    else:
        tone_analyzer_apikey =  settings.TONE_ANALYZER_APIKEY
        nlu_apikey = settings.NLU_APIKEY

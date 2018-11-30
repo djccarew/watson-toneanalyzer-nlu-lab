@@ -55,16 +55,29 @@ If you are not already signed up for the IBM Cloud, [sign up here](https://conso
 
 ## 2 Test scenario
 
-Test the scenario  using 3 earnings report transcripts  using  a standalone app. Both Python and Java are provided. Choose the one that you feel most comfortable with.  
+Test the scenario  using 3 earnings report transcripts  using  a standalone app. Both Python and Java are provided. Choose the one that you feel most comfortable with. 
 
-Python app requirements
+### Requirements
+You can install Python/Java locally or use Docker
+
+#### Docker
+If you use Docker you can run either app without additional software installs
+
+Docker requirements
+[Docker for your platform](https://docs.docker.com/install/)
+
+
+### Local Java or Python
+If you don't use  Docker then you'll need one of the following installed locally
+
+Python: 
 
   - [Python 3.5](https://www.python.org/downloads) or later.
 
-Java app requirements:
+Java:
 
   - Java 1.7 or later JVM
-  - [Gradle Build Tool](https://gradle.org) Note: Version 4.7 was used to verify this example
+  - [Gradle Build Tool](https://gradle.org) Note: Version 5.0  was used to verify this example
 
 
 
@@ -72,29 +85,27 @@ Java app requirements:
 
 2.1.1 Edit the file ***settings.py*** in the ***tone-analyzer-nlu-python*** sub folder of this project. Put in the values of your Tone Analyzer **apikey**  and your Natural Language Understanding  **apikey**  that you saved earlier.
 
-2.1.2 In a command prompt or terminal navigate to the ***tone-analyzer-nlu-python*** sub folder of this project. Run the following command(s) to install the dependencies
+2.1.2 In a command prompt or terminal navigate to the ***tone-analyzer-nlu-python*** sub folder of this project. 
 
-Setting up a virtual environment is very helpful when managing dependencies for specific applications.
+### Docker
 
-`pip install -r virtualenv`
+Run the following commands to get a bash shell in a Python environment to run the subsequent commands
 
-Create a virtual environment
+`docker run -it --rm -v "$(pwd):/repo"  python:3.5-slim-jessie  bash`
+`cd /repo`
 
-`virtualenv -p python3 venv`
+### Locally installed Python
+Run the subsequent commands  from your command prompt
 
-Activate the new virtual environment
-
-`source venv/bin/activate`
-
-Now install the dependencies for this project
+2.1.3 Run the following command to install the dependencies for this project
 
 `pip install -r requirements.txt`
 
-2.1.3 Run the following command to run the tester application
+2.1.4 Run the following command to run the tester application
 
 `python tone-analyzer-nlu.py`
 
-2.1.4 Verify the app runs without errors and the output looks something like the following.
+2.1.5 Verify the app runs without errors and the output looks something like the following.
 
 ```
 Analyzing  3 earnings call transcripts ...
@@ -116,7 +127,19 @@ subject: Client investment assets action: were object: 13% year-on-year
 2.2.1 Edit the file ***settings.properties*** in the ***tone-analyzer-nlu-java/src/main/resources*** sub folder of this project.Put in the values of your Tone Analyzer **apikey**  and your Natural Language Understanding  **apikey**  that you saved earlier.
 
 
-2.2.2 In a command prompt or terminal navigate to the ***tone-analyzer-nlu-java*** sub folder of this project. Run the following command to build the app
+2.2.2 In a command prompt or terminal navigate to the ***tone-analyzer-nlu-java*** sub folder of this project. 
+
+### Docker
+
+Run the following commands to get a bash shell in a Java+Gradle  environment to run the subsequent commands
+
+`docker run -it --rm -v "$(cd ../ && pwd):/repo"  gradle:slim  bash`
+`cd /repo/tone-analyzer-nlu-java`
+
+### Locally installed Java
+Run the subsequent commands  from your command prompt
+
+2.2.3 Run the following command to build the app
 
 **Linux/Mac**
 
@@ -126,7 +149,7 @@ subject: Client investment assets action: were object: 13% year-on-year
 
 `gradle.bat build`
 
-2.2.3 Run the following command to run the tester application
+2.2.4 Run the following command to run the tester application
 
 **Linux/Mac**
 
@@ -136,7 +159,7 @@ subject: Client investment assets action: were object: 13% year-on-year
 
 `gradlew.bat run`
 
-2.2.4 (Optional) Run the following command to generate Eclipse artifacts so the project can be imported into Eclipse
+2.2.5 (Optional) Run the following command to generate Eclipse artifacts so the project can be imported into Eclipse
 
 **Linux/Mac**
 
@@ -149,7 +172,7 @@ subject: Client investment assets action: were object: 13% year-on-year
 Note: after running the command import this folder as an existing project into Eclipse
 
 
-2.2.5 Verify the app runs without errors and the output looks something like the following.
+2.2.6 Verify the app runs without errors and the output looks something like the following.
 
 ```
 Analyzing 3 earnings call transcripts
